@@ -28,11 +28,11 @@ conn.close()
 
 @app.route('/')
 def favicon():
-    return send_from_directory('../static', 'index.html')
+    return send_from_directory('static', 'index.html')
 
 @app.route('/static/<filename>')
 def send_static(filename):
-    return send_from_directory('../static', f"{filename}")
+    return send_from_directory('static', f"{filename}")
 
 @app.route('/example_json', methods=['GET', 'POST'])
 def login():

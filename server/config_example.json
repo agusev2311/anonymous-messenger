@@ -1,0 +1,13 @@
+{
+    "flask-settings": {
+    	"connection": 5000,
+    	"debug": false,
+	"ip": "0.0.0.0"
+    },
+    "storage-settings": {
+	"storage": true,
+	"storage-path": "path/to/direcrory",
+	"storage-backup-count": 1,
+	"storage-backup-path-1": "path/to/directory"
+    }
+}

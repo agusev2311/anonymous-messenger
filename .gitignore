@@ -1,2 +1,3 @@
 encryption.txt
 server/data.sqlite
+server/config.json

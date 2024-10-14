@@ -10,24 +10,32 @@ app = flask.Flask(__name__)
 
 with open('config.json', 'r') as file:
     config = json.load(file)
-print(config)
 
 conn = sqlite3.connect('data.sqlite')
 cursor = conn.cursor()
 cursor.execute('''
-    CREATE TABLE IF NOT EXISTS requests (
+    CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        messages TEXT,
-        response TEXT,
-        user_id TEXT,
-        time TEXT
+        username TEXT,
+        rsa_key TEXT,
+        icon TEXT,
+        time INTEGER
     )
 ''')
+# cursor.execute('''
+#     CREATE TABLE IF NOT EXISTS messages (
+#         id INTEGER PRIMARY KEY AUTOINCREMENT,
+#         username TEXT,
+#         rsa_key TEXT,
+#         icon TEXT,
+#         time INTEGER
+#     )
+# ''')
 conn.commit()
 conn.close()
 
 @app.route('/')
-def favicon():
+def index():
     return send_from_directory('static', 'index.html')
 
 @app.route('/static/<filename>')
@@ -45,7 +53,17 @@ def login():
 
 @app.route("/server-config")
 def server_config():
-    return jsonify(config)
+    with open('config.json', 'r') as file:
+        return file
+    
+
+@app.route("/browsing")
+def browsing():
+    return "Hello world!"
+
+@app.route("/browsing/<path:path>")
+def browsing2(path):
+    return path
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host=config["flask-settings"]["ip"], port=config["flask-settings"]["port"], debug=config["flask-settings"]["debug"])
